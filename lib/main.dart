@@ -12,7 +12,7 @@ class HaggleX extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: Constants.APP_NAME,
-        theme: AppTheme().lightTheme,
+        theme: theme(context),
         home: LoginPage(),
         debugShowCheckedModeBanner: false);
   }
