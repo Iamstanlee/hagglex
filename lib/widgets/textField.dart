@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hagglex/utils/res.dart';
+import 'package:hagglex/utils/validators.dart';
+
+enum InputMode { LIGHT, DARK }
 
 class BaseTextField extends StatelessWidget {
   final String labelText;
@@ -9,8 +12,11 @@ class BaseTextField extends StatelessWidget {
   final FormFieldSetter<String> onSaved;
   final FormFieldValidator<String> validator;
   final TextEditingController controller;
+  final Widget suffixIcon;
   final String initialValue;
   final TextInputType keyboardType;
+  final bool obscureText;
+  final InputMode inputMode;
 
   BaseTextField(
       {this.labelText,
@@ -20,13 +26,16 @@ class BaseTextField extends StatelessWidget {
       this.validator,
       this.controller,
       this.initialValue,
-      this.keyboardType = TextInputType.number})
+      this.suffixIcon,
+      this.keyboardType,
+      this.inputMode,
+      this.obscureText = false})
       : super();
 
   @override
   Widget build(BuildContext context) {
     ThemeData t = Theme.of(context);
-
+    var c = inputMode == InputMode.DARK ? Colors.black : Colors.white;
     return TextFormField(
       controller: controller,
       inputFormatters: inputFormatters,
@@ -34,18 +43,22 @@ class BaseTextField extends StatelessWidget {
       validator: validator,
       initialValue: initialValue,
       keyboardType: keyboardType,
-      style: t.textTheme.bodyText2.copyWith(color: Colors.white),
+      obscureText: obscureText,
+      style: t.textTheme.bodyText2.copyWith(color: c),
       decoration: new InputDecoration(
           labelText: labelText,
           hintText: hintText,
-          labelStyle: t.textTheme.bodyText2.copyWith(color: Colors.white),
-          hintStyle: t.textTheme.bodyText2.copyWith(color: Colors.white),
+          labelStyle: t.textTheme.bodyText2.copyWith(color: c),
+          hintStyle: t.textTheme.bodyText2.copyWith(color: c),
           floatingLabelBehavior: FloatingLabelBehavior.auto,
           isDense: true,
-          border:
-              UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
-          enabledBorder:
-              UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+          suffixIcon: suffixIcon ??
+              Padding(
+                padding: const EdgeInsetsDirectional.only(end: 12.0),
+                child: suffixIcon,
+              ),
+          border: UnderlineInputBorder(borderSide: BorderSide(color: c)),
+          enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: c)),
           focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: R.Colors.focusedTextFieldColor))),
     );
@@ -55,17 +68,38 @@ class BaseTextField extends StatelessWidget {
 class TextInputField extends BaseTextField {
   TextInputField(
       {@required FormFieldSetter<String> onSaved,
-      @required Widget suffix,
       String labelText,
       String hintText,
+      Function(String) validator,
+      InputMode inputMode,
       TextInputType keyboardType})
       : super(
             labelText: labelText,
             hintText: hintText,
             onSaved: onSaved,
+            validator: validator ?? validateField,
+            inputMode: inputMode ?? InputMode.DARK,
             keyboardType: keyboardType ?? TextInputType.text);
+}
 
-  static String validateField(String fieldValue) {
-    return fieldValue.isNotEmpty ? null : R.Strings.fieldReq;
-  }
+/// passwordInputField
+class PwInputField extends BaseTextField {
+  PwInputField(
+      {@required FormFieldSetter<String> onSaved,
+      String labelText,
+      String hintText,
+      Function(String) validator,
+      TextInputType keyboardType,
+      bool obscureText,
+      InputMode inputMode,
+      Widget suffixIcon})
+      : super(
+            labelText: labelText,
+            hintText: hintText,
+            onSaved: onSaved,
+            inputMode: inputMode ?? InputMode.DARK,
+            obscureText: obscureText,
+            suffixIcon: suffixIcon,
+            validator: validator ?? validateField,
+            keyboardType: keyboardType ?? TextInputType.text);
 }

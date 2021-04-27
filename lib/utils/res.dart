@@ -7,14 +7,25 @@ class R {
 // ignore: non_constant_identifier_names
   static final Icons = _Icon();
 // ignore: non_constant_identifier_names
+  static final Images = _Image();
+// ignore: non_constant_identifier_names
   static final Strings = _String();
 // ignore: non_constant_identifier_names
   static final Colors = _Colors();
 }
 
 class _Icon {
-  static String iconPath(String icon) => 'assets/icons/$icon.svg';
-  String get icCatFilled => iconPath('cat_fill');
+  static String iconPath(String icon) => 'assets/icons/$icon.png';
+  String get icEye => iconPath('eye');
+  String get icEyeOff => iconPath('eye_off');
+}
+
+class _Image {
+  static String iconPath(String img, [String ext]) =>
+      'assets/images/$img.${ext ?? "png"}';
+  String get imCheck => iconPath('check');
+  String get imCheck2 => iconPath('check_2');
+  String get imBackground => iconPath('bg');
 }
 
 class _String {
@@ -23,7 +34,7 @@ class _String {
   String get fieldReq => 'This field is required';
   String get invalidPhoneNumber => 'Invalid phone number';
   String get passwordShortLength =>
-      'Password must be greater than 5 characters';
+      'Password must be greater than 8 characters';
   String get invalidEmail => 'Invalid email address';
   String get unKnownError => 'Unknown Error';
   String get sthWentWrong => 'Something went wrong.';
@@ -39,4 +50,5 @@ class _Colors {
   Color get orangeColor => Color(0xFFFFC175);
   Color get elevatedBtnTextColor => Color(0xFF3E0606);
   Color get focusedTextFieldColor => Color(0xFFBA3AF9);
+  Color get lightGrey => Color(0xFFE8E8E8);
 }

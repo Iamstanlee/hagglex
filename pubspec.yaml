@@ -8,6 +8,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  provider: ^5.0.0
+  graphql_flutter: ^4.0.1
   cupertino_icons: ^1.0.2
 
 dev_dependencies:

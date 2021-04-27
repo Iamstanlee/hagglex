@@ -30,8 +30,8 @@ ThemeData baseTheme(BuildContext context) => ThemeData(
         style: ElevatedButton.styleFrom(
             padding: EdgeInsets.all(20.0),
             elevation: 2.0,
-            shape: const BeveledRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(3.0))),
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(6.0))),
             primary: R.Colors.orangeColor,
             onPrimary: R.Colors.elevatedBtnTextColor)),
     inputDecorationTheme: InputDecorationTheme());
