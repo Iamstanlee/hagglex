@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hagglex/ui/dashboard/dashboard.dart';
 import 'package:hagglex/ui/signup/countryList.dart';
 import 'package:hagglex/ui/signup/verifyPhone.dart';
-import 'package:hagglex/ui/welcome/welcome.dart';
-import 'package:hagglex/utils/extensions.dart';
 import 'package:hagglex/utils/helpers.dart';
 import 'package:hagglex/utils/res.dart';
 import 'package:hagglex/utils/spacing.dart';
-import 'package:hagglex/utils/validators.dart';
 import 'package:hagglex/widgets/backButton.dart';
-import 'package:hagglex/widgets/elevatedButton.dart';
 import 'package:hagglex/widgets/gradientBtn.dart';
 import 'package:hagglex/widgets/textField.dart';
 

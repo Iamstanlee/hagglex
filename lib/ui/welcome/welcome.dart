@@ -44,7 +44,7 @@ class WelcomePage extends StatelessWidget {
                 start: 0,
                 end: 0,
                 child: Elevatedbtn('START EXPLORING', onTap: () {
-                  push(context, route: DashboardPage(), popPrev: true);
+                  push(context, route: DashboardPage(), popOFF: true);
                 }))
           ],
         ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hagglex/models/request/loginReq.dart';
 import 'package:hagglex/ui/dashboard/dashboard.dart';
+import 'package:hagglex/ui/login/loginViewModel.dart';
 import 'package:hagglex/ui/signup/signup.dart';
 import 'package:hagglex/utils/extensions.dart';
 import 'package:hagglex/utils/helpers.dart';
@@ -8,6 +10,7 @@ import 'package:hagglex/utils/spacing.dart';
 import 'package:hagglex/utils/validators.dart';
 import 'package:hagglex/widgets/elevatedButton.dart';
 import 'package:hagglex/widgets/textField.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -22,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     ThemeData t = Theme.of(context);
-
+    LoginViewModel loginViewModel = context.watch<LoginViewModel>();
     return Material(
         child: Container(
             padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding),
@@ -52,7 +55,9 @@ class _LoginPageState extends State<LoginPage> {
                               labelText: "Email Address",
                               hintText: "Enter your email address or username",
                               inputMode: InputMode.LIGHT,
-                              onSaved: (value) {}),
+                              onSaved: (value) {
+                                loginViewModel.loginRequest.input = value;
+                              }),
                           VSpacing.xl,
                           PwInputField(
                               labelText: "Password",
@@ -70,7 +75,9 @@ class _LoginPageState extends State<LoginPage> {
                                           ? R.Icons.icEye
                                           : R.Icons.icEyeOff),
                                       color: Colors.white)),
-                              onSaved: (value) {}),
+                              onSaved: (value) {
+                                loginViewModel.loginRequest.password = value;
+                              }),
                           VSpacing.xl,
                           Padding(
                             padding: EdgeInsets.only(bottom: 14, top: 10.0),
@@ -81,10 +88,10 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           VSpacing.xl,
                           Elevatedbtn("LOG IN", onTap: () {
-                            push(context, route: DashboardPage());
-                            // validateForm(formKey, next: () {
-                            //   push(context, route: DashboardPage());
-                            // });
+                            validateForm(formKey, next: () {
+                              loginViewModel.loginUser();
+                              //   push(context, route: DashboardPage(),popOFF: true);
+                            });
                           }),
                           VSpacing.xl,
                           Padding(

@@ -1,0 +1,1315 @@
+scalar FilterParam
+
+type Admin {
+  totalUsers: Int
+  totalTrades: Int
+  totalSavingsPlan: Int
+  totalOffers: Int
+  totalWalletsCreated: Int
+  totalTransactions: Int
+}
+
+type TransactionOverview {
+  walletsBalanceSum: WalletBalancTypes
+  transactionSum: Float
+  savingsPlanSum: Float
+}
+
+type WalletBalancTypes {
+  OTC: Float
+  SAVINGS: Float
+}
+
+type IndividualWalletSum {
+  btcWalletSum: Float
+  bchWalletSum: Float
+  ltcWalletSum: Float
+  dogeWalletSum: Float
+  dashWalletSum: Float
+  ethWalletSum: Float
+  usdtWalletSum: Float
+}
+
+input DisableUserInput {
+  userId: String!
+  disable: Boolean!
+}
+
+input AllUsersInput {
+  active: Boolean
+  pagination: PaginationInput!
+  filter: UsersFilterInput
+}
+
+input UsersFilterInput {
+  filterBy: UsersFilters
+  param: FilterParam
+}
+
+input GetUserInput {
+  userId: String!
+}
+
+enum UsersFilters {
+  username
+  email
+  active
+  phonenumber
+}
+
+input EditUserInfoInput {
+  userId: String!
+  editParams: EditUserParams
+}
+
+input EditUserParams {
+  username: String
+  email: String
+  displayName: String
+  active: Boolean
+}
+
+input DisableUser2FAInput {
+  userId: String!
+}
+
+input AllSavingPlanInput {
+  userId: String
+  status: PlanStatus
+  pagination: PaginationInput!
+  filter: SavingsPlanFilterInput
+}
+
+input SavingsPlanFilterInput {
+  filterBy: SavingsPlanFilters
+  param: FilterParam
+}
+
+enum SavingsPlanFilters {
+  totalAmountSaved
+  currency
+  startedOn
+  endsOn
+}
+
+input CancelSavingsPlanInput {
+  savingsPlanId: String!
+  chargeUser: Boolean!
+}
+
+input AlltUserWalletsInput {
+  userId: String!
+}
+
+input SearchTransactionInput {
+  searchParam: String
+}
+
+input UpdateWalletBalanceInput {
+  operation: ChangeBalanceOperations!
+  amount: Float!
+  walletId: String!
+  userId: String!
+}
+
+input LockWalletInput {
+  walletId: String!
+  status: WalletStatus!
+}
+
+input ApproveTransactionInput {
+  transactionId: String!
+  approvedBy: String!
+  networkFee: Float
+}
+
+input AllTransactionsInput {
+  transactionKind: TransactionKind
+  userId: String
+  address: String
+  pagination: PaginationInput!
+  filter: TransactionFilterInput
+}
+
+input TransactionFilterInput {
+  filterBy: TransactionFilters
+  param: String
+}
+
+input KycListInput {
+  pagination: PaginationInput!
+  kycStatus: KycStatus
+  filter: KycFiltersInput
+}
+
+input KycFiltersInput {
+  filterBy: KycFilters
+  param: FilterParam
+}
+
+enum KycFilters {
+  identificationType
+  kycStatus
+  username
+}
+
+input KycApprovalInput {
+  userId: String!
+  kycApproved: Boolean!
+  message: String
+}
+
+enum TransactionFilters {
+  currency
+  refId
+  receiverAddress
+  status
+}
+
+enum TransactionKind {
+  INTERNAL
+  EXTERNAL
+}
+
+input PaginationInput {
+  page: Int!
+  perPage: Int!
+}
+
+enum ChangeBalanceOperations {
+  ADD
+  SUBTRACT
+}
+
+type Query {
+  allTrades: [Trade]
+  allOffers: [Offer]
+  allUsers(data: AllUsersInput!): AllUserRO
+  allTransactions(data: AllTransactionsInput!): TransactionRO
+  allSavingsPlans(data: AllSavingPlanInput!): SavingsPlanRO
+  allUserWallets(data: AlltUserWalletsInput!): [Wallet]
+  searchTransactions(data: SearchTransactionInput!): TransactionRO
+  resetUserPassword(data: EmailInput!): Boolean
+  platformSummary: Admin
+  transactionOverview: TransactionOverview
+  getSavingsHistory(data: GetUserSavingsInput!): SavingsRO
+  getSavingsPlan(data: GetUserSavingsPlanInput!): SavingsPlan
+  getUser(data: GetUserInput!): User
+  individualWalletSum: IndividualWalletSum
+  adminKycList(data: KycListInput!): AllUserRO
+  getTradeChat(data: GetTradeChatInput): [Chat]
+  getOfferChats(data: GetOfferChatInput): [OfferChatRO]
+  getOfferChat(data: ChatInput): OfferConversation
+  getUserNotifications: [Object]
+  getOffer(data: GetOfferParam): Offer
+  getOffers(data: GetOffersQuery): [Offer]
+  getUserOffers(data: GetUserOffersQuery): [Offer]
+  getUserSavingPlan(data: GetUserSavingsPlanInput): SavingsPlan
+  getSavings(data: GetUserSavingsInput): [Savings]
+  getUserSavingPlans: [SavingsPlan]
+  getTrade(data: GetTradeInput): Trade
+  userTrades(data: UserTrades): [Trade!]
+  getUserTransactions(data: GetTransactionsInput!): [Transaction!]
+  user: User
+  getUsers: [User]
+  getRedisVerifyCode(data: RedisVerifyCodeInput!): String
+  resendVerificationCode(data: EmailInput): Boolean
+  requestPasswordReset(data: EmailInput): Boolean
+  generateQrCode: QrCodeRO
+  disableTwoFactorAuth: Boolean
+  getActiveCountries: [Country!]
+  getAverageUserRating(data: GetAverageRatingInput): AverageRatingRo
+  searchUsers(data: SearchUserInput): [User]
+  getPaymentOptions(data: GetPaymentOptionsInput): [PaymenOptionsRO]
+  getUserPaymentMethods(data: GetPaymentMethodInput): [PaymentMethod]
+  fetchWalletLog(data: FetchWalletLogInput!): WalletLog
+  fetchLogs: [WalletLog]
+  fetchWallet(data: FetchWalletInput!): Boolean!
+  deletePaymentForwarding(data: PaymentWordingInput!): Boolean!
+  deleteTokenForwarding(data: PaymentWordingInput!): Boolean!
+  getWallet(data: GetWalletInput!): Wallet!
+  getUserWallets: [Wallet]
+  updateICOBalances: Boolean
+  createKycDates: Boolean
+  deleteCron(data: DeleteCronInput!): Boolean
+  setCryptoNetworkFee(data: SetNetworkFeeInput!): String
+  setWebhook(data: SetWebhookInput!): Boolean
+  createWebHooks(data: SetWebhookInput!): Boolean
+  getAllWebhooks(data: GetWebHooksInput!): Int
+  freeTransfersRemaining: Int
+  calculateFee(data: CalculateFeeInput!): CalculateFee!
+}
+
+type Mutation {
+  disableUser(data: DisableUserInput!): User
+  updateWalletBalance(data: UpdateWalletBalanceInput!): Wallet
+  lockWallet(data: LockWalletInput!): Wallet
+  editUserInfo(data: EditUserInfoInput!): User
+  disableUser2FA(data: DisableUser2FAInput!): Boolean
+  cancelUserSavings(data: CancelSavingsPlanInput!): SavingsPlan
+  approveOrCancelTransaction(data: ApproveTransactionInput): Boolean!
+  adminKycApproval(data: KycApprovalInput!): User
+  tradeChats(data: TradeChatInput): Chat
+  offerChats(data: OfferChatInput): Chat
+  markAsRead(data: MarkAsReadInput): Boolean
+  createOffer(data: CreateOfferInput): Offer
+  updateOffer(data: UpdateOfferInput): Offer
+  createSavingPlan(data: CreateSavingsPlanInput): SavingsPlan
+  withdrawSavings(data: WithdrawSavingsInput): SavingsPlan
+  rollOverPlan(data: RollOverPlanInput): SavingsPlan
+  cancelSavingsPlan(data: BreakPlanInput): SavingsPlan
+  createTrade(data: CreateTradeInput): Trade
+  updateTradeStatus(data: UpdateTradeStatusInput): Trade
+  saveTradeRating(data: CreateTradeRatingInput!): Rating
+  releaseAsset(data: ReleaseAssetInput): Boolean
+  markAsPaid(data: MarkAsPaid): Trade
+  acceptTrade(data: AcceptTrade): String
+  remindSeller(data: RemindSeller): Boolean
+  updateTrade(data: UpdateTrade): Trade
+  createTransactionByHash(data: TransactionHashInput!): Boolean
+  register(data: CreateUserInput): UserRO
+  verifyUser(data: VerifyUserInput): UserRO
+  login(data: LoginInput!): LoginRO!
+  resetPassword(data: PasswordInput): Boolean!
+  validateTwofactorAuthentication(data: TotpInput): Boolean!
+  twoFALogin(data: TwoFALoginInput): UserRO!
+  changePassword(data: ChangePasswordInput): Boolean!
+  updateProfile(data: UpdateProfileInput): Boolean!
+  updateUser(data: UpdateUserInput): Boolean!
+  activateCountries(data: ActivateCountriesInput): Boolean!
+  updateProfilePicture(data: FileInput!): String
+  uploadIDimages(data: IdentificationImagesInput!): String
+  uploadImage(data: FileInput): String
+  createAuthPin(data: CreatePinInput!): UserRO
+  pinLogin(data: PinLoginInput!): UserRO
+  createPaymentMethod(data: CreatePaymentMethodInput): PaymentMethod
+  updatePaymentMethod(data: UpdatePaymentMethodInput): PaymentMethod
+  deletePaymentMethod(data: DeletePaymentMethodInput): Boolean
+  kycVerification(data: KycVerificationInput!): User
+  createRoles(data: CreateRolesInput!): Role
+  setRedisVerifyCode(data: RedisVerifyCodeInput!): String
+  changeLog(data: FetchWalletLogInput): Boolean!
+  externalTransfer(data: ExternalTransferInput): Boolean!
+  simulateExternalTransfer(data: ExternalTransferInput): Boolean!
+  internalTransfer(data: InternalTransferInput): Boolean!
+  savingsInternalTransfer(data: SavingsInternalTransferInput): SavingsPlan!
+  createHDWallet(data: CreateHDWalletInput): Boolean!
+  creatWallet(data: CreateWalletInput): CreateWallet
+  deleteWebhooks(data: GetWebHooksInput!): Boolean
+  approveTransaction(data: ApproveTransactionInput!): Transaction
+  deleteMany: Boolean
+}
+
+type AllUserRO {
+  results: [User]
+  total: Int
+}
+
+type TransactionRO {
+  results: [Transaction]
+  total: Int
+}
+
+type SavingsRO {
+  results: [Savings]
+  total: Int
+}
+
+type WalletRO {
+  results: [Wallet]
+  total: Int
+}
+
+type SavingsPlanRO {
+  results: [SavingsPlan]
+  total: Int
+}
+
+scalar Recipient
+
+type Chat {
+  offer: Offer
+  chatId: String
+  createdAt: String
+  message: String
+  sender: User
+  recipient: Recipient
+}
+
+type OfferChatRO {
+  id: String!
+  primaryUser: String
+  secondaryUser: String
+  offerPrimaryUser: User
+  offerSecondaryUser: User
+}
+
+type OfferConversation {
+  chatId: String!
+  conversation: [Chat]
+}
+
+input OfferChatInput {
+  message: String!
+  offerId: String
+  chatId: String
+}
+
+input TradeChatInput {
+  message: String!
+  tradeId: String!
+  chatId: String
+}
+
+input GetTradeChatInput {
+  tradeId: String!
+}
+
+input GetOfferChatInput {
+  offerId: String!
+}
+
+input ChatInput {
+  chatId: String
+  secondaryUser: String
+  offer: String
+}
+
+type Subscription {
+  sendChat(id: String!): Chat!
+  sendNotification(_id: String!): Object!
+}
+
+scalar Object
+
+input MarkAsReadInput {
+  notificationId: String
+}
+
+type Offer {
+  _id: String
+  offerTerms: String
+  offerType: String
+  offerKind: String
+  cryptoCurrency: CurrencyTypes
+  fiatCurrency: String
+  fiatCurrencyDetails: FiatCurrencyDetails
+  status: String
+  user: String
+  paymentMethods: [PaymentMethod!]
+  giftcardTags: [String]
+  location: LocationDetails
+  margin: Float
+  maxPrice: Float
+  minPrice: Float
+  paymentWindow: Float
+  rate: Float
+  showOnlyTrustedUsers: Boolean
+  aboveMargin: Boolean
+  belowMargin: Boolean
+  creator: User
+  trade: [Trade]
+  createdAt: String
+}
+
+type FiatCurrencyDetails {
+  code: String
+  name: String
+  symbol: String
+}
+
+type LocationDetails {
+  alpha3Code: String
+  name: String
+  flag: String
+}
+
+input LocationDetailsInput {
+  alpha3Code: String
+  name: String
+  flag: String
+}
+
+input FiatCurrencyDetailsInput {
+  code: String!
+  name: String!
+  symbol: String!
+}
+
+enum OfferKind {
+  FIAT
+  GIFTCARD
+}
+
+enum OfferType {
+  BUY
+  SELL
+}
+
+enum FiatCurrencyTypes {
+  USD
+  AUD
+  NGN
+  GBP
+  VEF
+  UGX
+  TRY
+  EUR
+}
+
+enum OfferStatus {
+  ACTIVE
+  PAUSED
+  CANCELLED
+}
+
+input CreateOfferInput {
+  offerTerms: String
+  offerType: OfferType!
+  offerKind: OfferKind!
+  cryptoCurrency: CurrencyTypes!
+  fiatCurrency: FiatCurrencyTypes!
+  fiatCurrencyDetails: FiatCurrencyDetailsInput!
+  paymentMethods: [PaymentMethodInput!]
+  giftcardTags: [String]
+  location: LocationDetailsInput
+  margin: Float
+  maxPrice: Float!
+  minPrice: Float!
+  paymentWindow: Float!
+  rate: Float!
+  showOnlyTrustedUsers: Boolean
+  aboveMargin: Boolean
+  belowMargin: Boolean
+}
+
+input UpdateOfferInput {
+  offerId: String!
+  status: OfferStatus
+  offerTerms: String
+  offerKind: OfferKind
+  cryptoCurrency: CurrencyTypes
+  fiatCurrency: FiatCurrencyTypes
+  fiatCurrencyDetails: FiatCurrencyDetailsInput
+  paymentMethods: [PaymentMethodInput!]
+  giftcardTags: [String]
+  location: LocationDetailsInput
+  margin: Float
+  maxPrice: Float
+  minPrice: Float
+  paymentWindow: Float
+  rate: Float
+  showOnlyTrustedUsers: Boolean
+  aboveMargin: Boolean
+  belowMargin: Boolean
+}
+
+input PauseOfferInput {
+  status: OfferStatus
+  offerId: String
+}
+
+input GetOfferParam {
+  offerId: String
+}
+
+input GetOffersQuery {
+  offerType: OfferType!
+  paymentMethod: String
+  location: String!
+  fiatCurrency: FiatCurrencyTypes
+  cryptoCurrency: CurrencyTypes
+}
+
+input GetUserOffersQuery {
+  status: OfferStatus!
+  offerKind: OfferKind!
+  offerType: OfferType
+  paymentMethod: String
+  location: String
+  fiatCurrency: FiatCurrencyTypes
+  cryptoCurrency: CurrencyTypes
+}
+
+type Card {
+  id: String
+  user: String
+  cardDetails: CardDetails
+}
+
+type CardDetails {
+  cardType: String
+  authorizationCode: String
+  bank: String
+  bin: String
+  brand: String
+  expMonth: String
+  expYear: String
+  last4: String
+  channel: String
+  countryCode: String
+}
+
+type Role {
+  _id: String
+  role: String
+  description: String
+}
+
+type Savings {
+  _id: String
+  savingsPlan: SavingsPlan
+  amount: Float
+  status: SavingStatus
+  transactionType: TransactionType
+  createdAt: String
+}
+
+type SavingsPlan {
+  _id: String
+  duration: Duration
+  planName: String
+  description: String
+  savingsWallet: Wallet
+  createdOn: String
+  startedOn: String
+  endsOn: String
+  status: PlanStatus
+  currency: CurrencyTypes
+  totalAmountSaved: Float
+  creator: User
+}
+
+enum DurationType {
+  MONTH
+  WEEK
+  MINUTE
+  YEAR
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+}
+
+enum SavingStatus {
+  CANCELED
+  SAVED
+  PENDING
+  COMPLETED
+}
+
+enum PlanStatus {
+  MATURED
+  RUNNING
+  INACTIVE
+  CANCELLED
+}
+
+type Duration {
+  canonicalName: String
+  durationType: DurationType!
+  duration: Int!
+}
+
+input DurationInput {
+  canonicalName: String!
+  durationType: DurationType!
+  duration: Int!
+}
+
+input CreateSavingsPlanInput {
+  duration: DurationInput!
+  currency: CurrencyTypes!
+  planName: String
+  description: String
+  wallet: String!
+}
+
+input GetUserSavingsPlanInput {
+  planId: String!
+}
+
+input GetUserSavingsInput {
+  planId: String!
+  pagination: PaginationInput
+}
+
+input WithdrawSavingsInput {
+  plan: String!
+  receivingAddress: String!
+  amountToWithdraw: Float!
+}
+
+input UpdatePlanStatusInput {
+  planId: String!
+  status: PlanStatus!
+}
+
+input RollOverPlanInput {
+  planId: String!
+  duration: DurationInput!
+}
+
+input BreakPlanInput {
+  planId: String!
+  receivingAddress: String!
+}
+
+type Trade {
+  _id: String
+  amount: Float
+  seller: User
+  buyer: User
+  offer: Offer
+  rating: Rating
+  status: String
+  paid: Boolean
+  fundedEscrow: String
+  lockedInRate: Float
+  refId: String
+  createdAt: String
+  paymentMethod: PaymentMethod
+}
+
+input CreateTradeInput {
+  offerId: String!
+  amount: Float!
+  lockedInRate: Float!
+  paymentMethod: PaymentMethodInput!
+}
+
+input UpdateTrade {
+  tradeId: String!
+  reason: String
+  paymentMethod: PaymentMethodInput
+}
+
+input CreateTradeRatingInput {
+  tradeId: String!
+  rating: Float!
+}
+
+input GetTradeInput {
+  tradeId: String
+}
+
+type Rating {
+  _id: String
+  rating: Float
+  tradeRater: User
+  tradeRatee: User
+  tradeDetails: Trade
+}
+
+enum TradeStatus {
+  DISPUTED
+  ENDED
+  CANCELLED
+  ONGOING
+  PENDING
+}
+
+input UpdateTradeStatusInput {
+  status: TradeStatus
+  tradeId: String!
+}
+
+input FundEscrowInput {
+  tradeId: String
+}
+
+input ReleaseAssetInput {
+  tradeId: String
+}
+
+input MarkAsPaid {
+  tradeId: String
+}
+
+input RemindSeller {
+  tradeId: String
+}
+
+input AcceptTrade {
+  tradeId: String
+}
+
+input UserTrades {
+  status: TradeStatus!
+}
+
+type Transaction {
+  _id: String!
+  user: String!
+  transactionHash: String
+  refId: String!
+  sender: String
+  receiver: String
+  transactionModule: TransactionModules
+  confirmations: Int
+  amount: Float!
+  currency: CurrencyTypes
+  fiatDetails: FiatDetails
+  action: String
+  status: String
+  networkFees: String
+  hagglexFees: Float
+  transactionKind: String!
+  createdAt: String
+  owner: User!
+}
+
+type FiatDetails {
+  exchangeRate: Float
+  usdAmount: Float
+}
+
+enum TransactionModules {
+  SAVINGS
+  WALLET
+  TRADE
+}
+
+enum TransactionActions {
+  SENDING
+  RECEIVING
+}
+
+input GetTransactionsInput {
+  address: String!
+  currency: CurrencyTypes!
+  transactionModule: TransactionModules!
+  token: EthTokens
+}
+
+input TransactionHashInput {
+  address: String!
+  currency: CurrencyTypes!
+  action: TransactionActions!
+  userEmail: String!
+  transactionHash: String!
+}
+
+# File upload scalar type
+scalar Upload
+
+scalar PaymentDetails
+
+type User {
+  _id: String!
+  email: String!
+  phonenumber: String!
+  phoneNumberDetails: PhoneNumberDetails
+  referralCode: String!
+  totalReferralEarning: Float
+  referralCount: Int
+  tradeCount: Int
+  avgTradeRating: Float
+  username: String!
+  kycStatus: String!
+  emailVerified: Boolean
+  phoneNumberVerified: Boolean
+  active: Boolean
+  suspended: Boolean
+  role: Role
+  profile: Profile
+  userCard: Card
+  kyc: Kyc
+  paymentMethods: [PaymentMethod]
+  createdAt: String
+}
+
+type Profile {
+  displayName: String
+  currency: String
+  profilePicture: String
+  dateOfBirth: String
+  country: String
+  twoFactorEnabled: Boolean
+  orderNotification: Boolean
+  chatNotification: Boolean
+  marketNotification: Boolean
+  pushNotification: Boolean
+  otcNotification: Boolean
+  withdrawalsNotification: Boolean
+  utilitiesNotification: Boolean
+  kycStatusMessage: String
+}
+
+type Kyc {
+  country: String
+  firstName: String
+  lastName: String
+  zipCode: String
+  gender: String
+  state: String
+  city: String
+  address: String
+  phoneNumber: String
+  dateOfBirth: String
+  identificationType: String
+  documentVerificationNumber: String
+  identificationFrontImg: String
+  identificationBackImg: String
+  photoProof: String
+  kycStatusMessage: String
+  submittedOn: String
+  verifiedOn: String
+}
+
+type PaymentMethod {
+  _id: String
+  paymentDetails: PaymentDetails
+  paymentOptionDetails: PaymentOption
+}
+
+type PaymentOption {
+  _id: String
+  option: String
+  type: String
+  url: String
+}
+
+type Country {
+  _id: String
+  name: String
+  alpha2Code: String
+  alpha3Code: String
+  region: String
+  currencyDetails: CurrencyDetails
+  currencyCode: String
+  callingCode: String
+  hasRate: Boolean!
+  flag: String
+}
+
+type CurrencyDetails {
+  code: String
+  name: String
+  symbol: String
+}
+
+type PhoneNumberDetails {
+  phoneNumber: String
+  callingCode: String
+  flag: String
+}
+
+type Message {
+  message: String
+  status: Int
+}
+
+type PaymenOptionsRO {
+  _id: String
+  type: String
+  option: String
+  url: String
+}
+
+enum PaymentType {
+  BANK_TRANSFER
+}
+
+input PaymentMethodInput {
+  _id: String
+  paymentDetails: PaymentDetails
+  paymentOptionDetails: PaymentOptionInput
+}
+
+input PaymentOptionInput {
+  _id: String
+  option: String
+  type: String
+  url: String
+}
+
+input CreateUserInput {
+  email: String!
+  username: String!
+  password: String!
+  phonenumber: String!
+  referralCode: String
+  phoneNumberDetails: PhoneNumberDetailsInput
+  country: String!
+  currency: String!
+}
+
+input PhoneNumberDetailsInput {
+  phoneNumber: String!
+  callingCode: String!
+  flag: String!
+}
+
+input UpdateProfileInput {
+  displayName: String
+  currency: String
+  profilePicture: String
+  identificationType: String
+  documentVerificationNumber: String
+  dateOfBirth: String
+  country: String
+  phonenumber: String
+  phoneNumberDetails: PhoneNumberDetailsInput
+  twoFactorEnabled: Boolean
+  orderNotification: Boolean
+  chatNotification: Boolean
+  marketNotification: Boolean
+  pushNotification: Boolean
+  otcNotification: Boolean
+  withdrawalsNotification: Boolean
+  utilitiesNotification: Boolean
+}
+
+input KycVerificationInput {
+  firstName: String!
+  lastName: String!
+  zipCode: String!
+  gender: String
+  country: String!
+  state: String!
+  city: String!
+  address: String!
+  identificationType: String!
+  documentVerificationNumber: String!
+  dateOfBirth: String
+  phoneNumber: String
+}
+
+input IdentificationImagesInput {
+  file: Upload!
+  imageType: imageType!
+}
+
+enum imageType {
+  FRONT
+  BACK
+  PHOTO_PROOF
+}
+
+input UpdateUserInput {
+  phoneNumberDetails: PhoneNumberDetailsInput
+}
+
+input LoginInput {
+  input: String!
+  password: String!
+}
+
+input VerifyUserInput {
+  code: Int!
+}
+
+input EmailInput {
+  email: String!
+}
+
+input PasswordInput {
+  password: String!
+}
+
+input TotpInput {
+  totpCode: String
+}
+
+input TwoFALoginInput {
+  totpCode: String!
+  email: String!
+}
+
+input GetAverageRatingInput {
+  userId: String
+}
+
+input ChangePasswordInput {
+  oldPassword: String!
+  newPassword: String!
+}
+
+input CountryData {
+  name: String!
+}
+
+input ActivateCountriesInput {
+  countries: [CountryData!]
+}
+
+input FileInput {
+  file: Upload!
+}
+
+input CreatePinInput {
+  pin: Int!
+}
+
+input PinLoginInput {
+  email: String!
+  pin: Int!
+}
+
+input CreatePaymentMethodInput {
+  paymentDetails: PaymentDetails
+  paymentOptionId: String!
+}
+
+enum PaymentOptionType {
+  FIAT
+  GIFTCARD
+  GIFTCARD_LABEL
+}
+
+enum KycStatus {
+  VERIFIED
+  UNVERIFIED
+  PENDING
+  REJECTED
+}
+
+input GetPaymentOptionsInput {
+  type: PaymentOptionType!
+  option: String
+}
+
+input UpdatePaymentMethodInput {
+  paymentDetails: PaymentDetails!
+  paymentId: String!
+}
+
+input DeletePaymentMethodInput {
+  paymentId: String!
+}
+
+input SearchUserInput {
+  searchParam: String!
+}
+
+input CreateRolesInput {
+  role: String!
+  description: String
+}
+
+input GetPaymentMethodInput {
+  user: ID
+}
+
+input RedisVerifyCodeInput {
+  email: String!
+}
+
+type QrCodeRO {
+  qrCode: String!
+  qrString: String!
+}
+
+type UserRO {
+  user: User!
+  token: String!
+}
+
+type LoginRO {
+  user: User!
+  token: String
+  twoFactorAuth: Boolean
+}
+
+type AverageRatingRo {
+  averageRating: Float
+}
+
+type WalletLog {
+  _id: String
+  senderWallet: Wallet
+  receiverWallet: Wallet
+  status: ProcessingStatus
+  amountTransacting: Float
+  logMessage: String
+  senderBalance: BalanceState
+  receiverBalance: BalanceState
+  timestamps: TimeStampState
+  currency: CurrencyTypes
+  transactionKind: String
+}
+
+enum ProcessingStatus {
+  FAILED
+  PROCESSING
+  SUCCESSFUL
+}
+
+type BalanceState {
+  oldBalance: Float
+  expectedNewBalance: Float
+  newBalance: Float
+}
+
+type TimeStampState {
+  whenSent: String
+  whenReceived: String
+  whenFailed: String
+}
+
+input FetchWalletLogInput {
+  logId: String
+}
+
+type Wallet {
+  _id: String
+  user: String
+  currency: CurrencyTypes
+  walletName: String
+  walletCategory: String
+  custodial: Boolean
+  address: String
+  addresses: [EthAddresses]
+  type: String
+  status: String
+  default: Boolean
+  balance: Float
+  createdAt: String
+  token: String
+  owner: User
+  protocol: String
+  ecr20Address: String
+  omniAddress: String
+}
+
+input FetchWalletInput {
+  currency: CurrencyTypes!
+  walletName: String!
+  walletTypes: [WalletTypes!]!
+  password: String!
+}
+
+input GetWalletInput {
+  walletId: String!
+}
+
+input SetWebhookInput {
+  currency: CurrencyTypes!
+  event: String!
+  address: String!
+  confirmations: Int!
+}
+
+input ExternalTransferInput {
+  currency: CurrencyTypes!
+  password: String
+  toAddress: String!
+  senderWallet: String!
+  amount: Float!
+  protocol: Protocol
+  token: EthTokens
+}
+
+input InternalTransferInput {
+  sendingAddress: String!
+  toAddress: String!
+  currency: CurrencyTypes!
+  walletType: String!
+  amount: Float!
+}
+
+input SavingsInternalTransferInput {
+  sendingAddress: String!
+  receivingAddress: String!
+  plan: String!
+  amount: Float!
+}
+
+enum CurrencyTypes {
+  BTC
+  DOGE
+  BCH
+  DASH
+  LTC
+  USDT
+  ETH
+  HAG
+}
+
+enum WalletStatus {
+  ACTIVE
+  BLOCKED
+  LOCKED
+}
+
+enum WalletTypes {
+  OTC
+  SAVINGS
+  VAULT
+  FLEX
+}
+
+enum EthTokens {
+  ETH
+  USDT
+  HAG
+}
+
+enum Protocol {
+  ECR20
+  OMNI
+}
+
+input CreateHDWalletInput {
+  currency: CurrencyTypes!
+  walletName: String!
+  password: String!
+  walletTypes: [WalletTypes!]!
+}
+
+input CalculateFeeInput {
+  currency: CurrencyTypes!
+  address: String
+  amount: Float
+  toAddress: String
+  value: Float
+}
+
+input PaymentWordingInput {
+  currency: CurrencyTypes!
+}
+
+input GetWebHooksInput {
+  currency: CurrencyTypes!
+}
+
+input SetNetworkFeeInput {
+  currency: CurrencyTypes!
+  networkFee: Float!
+}
+
+input DeleteCronInput {
+  name: String!
+}
+
+type CalculateFee {
+  networkFees: Float
+  hagglexFees: Float
+  gasPrice: Float
+  gasLimit: Float
+}
+
+input CreateWalletInput {
+  currency: CurrencyTypes!
+}
+
+type CreateWallet {
+  address: String
+  privateKey: String
+  publicKey: String
+  wif: String
+}
+
+type EthAddresses {
+  protocol: String!
+  address: String!
+}
+
+input SendInput {
+  currency: String!
+  toAddress: String!
+  amount: Float!
+  networkFee: Float!
+}

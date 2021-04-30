@@ -3,7 +3,6 @@ import 'package:hagglex/ui/welcome/welcome.dart';
 import 'package:hagglex/utils/helpers.dart';
 import 'package:hagglex/utils/res.dart';
 import 'package:hagglex/utils/spacing.dart';
-import 'package:hagglex/utils/validators.dart';
 import 'package:hagglex/widgets/backButton.dart';
 import 'package:hagglex/widgets/gradientBtn.dart';
 import 'package:hagglex/widgets/textField.dart';
@@ -70,7 +69,7 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
                             onSaved: (value) {}),
                         VSpacing.lg,
                         GradientBtn("VERIFY ME", onTap: () {
-                          push(context, route: WelcomePage());
+                          push(context, route: WelcomePage(), popPrev: true);
                           //   validateForm(formKey, next: () {
                           //     push(context, route: WelcomePage());
                           //   });
