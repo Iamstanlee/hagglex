@@ -89,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                           VSpacing.xl,
                           Elevatedbtn("LOG IN", onTap: () {
                             validateForm(formKey, next: () {
-                              loginViewModel.loginUser();
+                              loginViewModel.loginUser(context);
                               //   push(context, route: DashboardPage(),popOFF: true);
                             });
                           }),

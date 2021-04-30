@@ -6,7 +6,7 @@ import 'package:hagglex/theme.dart';
 import 'package:hagglex/ui/login/login.dart';
 import 'package:hagglex/ui/login/loginViewModel.dart';
 import 'package:hagglex/utils/constants.dart';
-import 'package:hagglex/utils/locator.dart';
+import 'package:hagglex/utils/helpers.dart';
 import 'package:provider/provider.dart';
 
 void main() {

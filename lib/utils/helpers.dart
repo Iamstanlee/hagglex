@@ -1,5 +1,21 @@
 import 'package:flutter/material.dart';
 
+import 'package:get_it/get_it.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:hagglex/services/authentication.dart';
+import 'package:hagglex/services/sharedPreference.dart';
+import 'package:hagglex/utils/constants.dart';
+import 'package:hagglex/utils/graphql.dart';
+
+final getIt = GetIt.instance;
+void setupLocator() {
+  getIt.registerLazySingletonAsync<SharedPrefService>(
+      () async => SharedPrefService().init());
+  getIt.registerLazySingleton<GraphQLClient>(
+      () => clientFor(uri: Constants.GQL_CLIENT));
+  getIt.registerLazySingleton<AuthServiceImpl>(() => AuthServiceImpl());
+}
+
 ///
 /// push a new route by passing a route widget
 /// if `popPrev` is `true`, it would pop off the previous routes off the stack
@@ -8,7 +24,7 @@ import 'package:flutter/material.dart';
 /// the back button is pressed
 ///
 Future<T> push<T>(BuildContext context,
-    {Widget route, bool popPrev = false, bool popOFF = false}) async {
+    {@required Widget route, bool popPrev = false, bool popOFF = false}) async {
   if (popPrev)
     return await Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (_) => route), (_) => _.isFirst);

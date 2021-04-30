@@ -2,7 +2,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:hagglex/models/request/loginReq.dart';
 import 'package:hagglex/models/response/loginResp.dart';
 import 'package:hagglex/utils/api.dart';
-import 'package:hagglex/utils/locator.dart';
+import 'package:hagglex/utils/helpers.dart';
 
 class AuthServiceImpl implements AuthService {
   @override
