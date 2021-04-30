@@ -27,9 +27,10 @@ class AuthServiceImpl implements AuthService {
     );
     final QueryResult res = await getIt<GraphQLClient>().mutate(options);
     if (res.hasException) {
-      throw FetchDataException(res.exception.graphqlErrors[0].message);
+      throw FetchDataException(
+          res.exception.graphqlErrors[0]?.message ?? "Something went wrong");
     } else {
-      return LoginResp.fromJson(res.data);
+      return LoginResp.fromJson(res.data['login']);
     }
   }
 }

@@ -9,8 +9,7 @@ import 'package:hagglex/utils/graphql.dart';
 
 final getIt = GetIt.instance;
 void setupLocator() {
-  getIt.registerLazySingletonAsync<SharedPrefService>(
-      () async => SharedPrefService().init());
+  getIt.registerLazySingleton<SharedPrefService>(() => SharedPrefService());
   getIt.registerLazySingleton<GraphQLClient>(
       () => clientFor(uri: Constants.GQL_CLIENT));
   getIt.registerLazySingleton<AuthServiceImpl>(() => AuthServiceImpl());

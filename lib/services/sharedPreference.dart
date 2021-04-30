@@ -1,19 +1,14 @@
+import 'package:hagglex/utils/helpers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// shared preference service
 class SharedPrefService {
   SharedPreferences _sharedPreferences;
 
-  Future<SharedPrefService> init() async {
+  Future<Null> init() async {
     _sharedPreferences = await SharedPreferences.getInstance();
-    return this;
   }
 
-  void setToken(String key, String item) {
-    _sharedPreferences.setString(key, item);
-  }
-
-  String getToken(String key) {
-    return _sharedPreferences.getString(key) ?? "";
-  }
+  set token(String token) => _sharedPreferences.setString('token', token);
+  String get token => _sharedPreferences.getString('token') ?? '';
 }

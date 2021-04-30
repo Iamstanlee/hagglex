@@ -1,11 +1,9 @@
-import 'package:graphql_flutter/graphql_flutter.dart';
-
 class Response<T> {
   Status status;
   T data;
   String message;
 
-  Response.initial(this.message) : status = Status.INITIAL;
+  Response.initial([this.message]) : status = Status.INITIAL;
 
   Response.loading(this.message) : status = Status.LOADING;
 
@@ -28,13 +26,12 @@ class AppException implements Exception {
   AppException([this._message, this._prefix]);
 
   String toString() {
-    return "$_prefix:$_message";
+    return "$_prefix$_message";
   }
 }
 
 class FetchDataException extends AppException {
-  FetchDataException([String message])
-      : super(message, "Error During Communication:-");
+  FetchDataException([String message]) : super(message, "Error:- ");
 }
 
 class BadRequestException extends AppException {

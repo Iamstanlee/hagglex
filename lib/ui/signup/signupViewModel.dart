@@ -8,9 +8,9 @@ import 'package:hagglex/utils/api.dart';
 import 'package:hagglex/utils/helpers.dart';
 import 'package:hagglex/widgets/toast.dart';
 
-class LoginViewModel with ChangeNotifier {
+class SignupViewModel with ChangeNotifier {
   final AuthServiceImpl authService;
-  LoginViewModel(this.authService);
+  SignupViewModel(this.authService);
 
   Response<User> _response = Response.initial();
   Response get response => _response;
@@ -21,20 +21,12 @@ class LoginViewModel with ChangeNotifier {
 
   LoginRequest loginRequest = new LoginRequest();
 
-  void loginUser(BuildContext context) async {
+  void signupUser(BuildContext context) async {
     response = Response.loading("Please wait...");
-    if (!loginRequest.isRequired) {
-      authService.login(loginRequest).then((res) {
-        // if login is successful, store the user token
-        // we can do some other stuff here like checking if the user email is verified
-        // or has 2FA enabled
-        getIt<SharedPrefService>().token = res.token;
-        response = Response.completed(res.user);
-        push(context, route: DashboardPage());
-      }).catchError((err) {
-        response = Response.error(err.toString());
-        errorToast(context, err.toString());
-      });
-    }
+    if (!loginRequest.isRequired) {}
+    // .catchError((err) {
+    //     response = Response.error(err.toString());
+    //     errorToast(context, err.toString());
+    //   });
   }
 }
