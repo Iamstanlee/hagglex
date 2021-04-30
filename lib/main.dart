@@ -7,6 +7,7 @@ import 'package:hagglex/theme.dart';
 import 'package:hagglex/ui/dashboard/dashboard.dart';
 import 'package:hagglex/ui/login/login.dart';
 import 'package:hagglex/ui/login/loginViewModel.dart';
+import 'package:hagglex/ui/signup/signupViewModel.dart';
 import 'package:hagglex/utils/constants.dart';
 import 'package:hagglex/utils/helpers.dart';
 import 'package:provider/provider.dart';
@@ -42,7 +43,9 @@ class HaggleX extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-            create: (_) => LoginViewModel(getIt<AuthServiceImpl>()))
+            create: (_) => LoginViewModel(getIt<AuthServiceImpl>())),
+        ChangeNotifierProvider(
+            create: (_) => SignupViewModel(getIt<AuthServiceImpl>()))
       ],
       child: MaterialApp(
           title: Constants.APP_NAME,

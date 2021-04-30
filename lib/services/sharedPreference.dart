@@ -11,4 +11,9 @@ class SharedPrefService {
 
   set token(String token) => _sharedPreferences.setString('token', token);
   String get token => _sharedPreferences.getString('token') ?? '';
+
+// clear the sharedprefs in the case of a signout or any other effect
+  Future<Null> flush() async {
+    await _sharedPreferences.clear();
+  }
 }

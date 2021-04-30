@@ -7,11 +7,12 @@ part of 'loginResp.dart';
 // **************************************************************************
 
 LoginResp _$LoginRespFromJson(Map<String, dynamic> json) {
-  return LoginResp()
-    ..user = json['user'] == null
+  return LoginResp(
+    json['user'] == null
         ? null
-        : User.fromJson(json['user'] as Map<String, dynamic>)
-    ..token = json['token'] as String;
+        : User.fromJson(json['user'] as Map<String, dynamic>),
+    json['token'] as String,
+  );
 }
 
 Map<String, dynamic> _$LoginRespToJson(LoginResp instance) => <String, dynamic>{

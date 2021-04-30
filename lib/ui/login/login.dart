@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hagglex/models/request/loginReq.dart';
-import 'package:hagglex/ui/dashboard/dashboard.dart';
 import 'package:hagglex/ui/login/loginViewModel.dart';
 import 'package:hagglex/ui/signup/signup.dart';
 import 'package:hagglex/utils/api.dart';
@@ -61,6 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                                 hintText:
                                     "Enter your email address or username",
                                 inputMode: InputMode.LIGHT,
+                                validator: validateEmail,
                                 onSaved: (value) {
                                   loginViewModel.loginRequest.input = value;
                                 }),
@@ -69,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                                 labelText: "Password",
                                 hintText: "Password (Min. 8 characters)",
                                 inputMode: InputMode.LIGHT,
+                                validator: validatePassword,
                                 obscureText: obscureText,
                                 suffixIcon: GestureDetector(
                                     onTap: () {
@@ -96,7 +96,6 @@ class _LoginPageState extends State<LoginPage> {
                             Elevatedbtn("LOG IN", onTap: () {
                               validateForm(formKey, next: () {
                                 loginViewModel.loginUser(context);
-                                //   push(context, route: DashboardPage(),popOFF: true);
                               });
                             }),
                             VSpacing.xl,

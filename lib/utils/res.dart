@@ -18,6 +18,7 @@ class _Icon {
   static String iconPath(String icon) => 'assets/icons/$icon.png';
   String get icEye => iconPath('eye');
   String get icEyeOff => iconPath('eye_off');
+  String get icRefresh => iconPath('refresh');
 }
 
 class _Image {

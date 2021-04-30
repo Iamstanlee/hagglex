@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:graphql_flutter/graphql_flutter.dart';
+
 class Response<T> {
   Status status;
   T data;
@@ -44,4 +48,13 @@ class UnauthorisedException extends AppException {
 
 class InvalidInputException extends AppException {
   InvalidInputException([String message]) : super(message, "Invalid Input:- ");
+}
+
+void throwOperationError(OperationException operationException) {
+  throw FetchDataException(operationException.graphqlErrors.length != 0
+      ? operationException.graphqlErrors[0].message
+      //   socket exception exposes our graphql endpoint and we dont want that
+      : operationException.linkException.originalException is SocketException
+          ? "NetworkError when attempting to fetch resource."
+          : operationException.linkException.originalException.message);
 }

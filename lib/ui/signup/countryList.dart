@@ -1,7 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hagglex/models/country.dart';
+import 'package:hagglex/ui/signup/signupViewModel.dart';
+import 'package:hagglex/utils/helpers.dart';
 import 'package:hagglex/utils/res.dart';
 import 'package:hagglex/utils/spacing.dart';
+import 'package:provider/provider.dart';
 
 class CountryListPage extends StatefulWidget {
   @override
@@ -11,6 +16,8 @@ class CountryListPage extends StatefulWidget {
 class _CountryListPageState extends State<CountryListPage> {
   @override
   Widget build(BuildContext context) {
+    SignupViewModel signupViewModel = context.watch<SignupViewModel>();
+    final countries = signupViewModel.countriesResponse.data;
     return Scaffold(
       backgroundColor: R.Colors.primaryColor,
       body: Padding(
@@ -22,7 +29,11 @@ class _CountryListPageState extends State<CountryListPage> {
               child: searchTextField(context),
             ),
             Divider(color: R.Colors.primaryColorLight),
-            for (var i = 0; i < 20; i++) countryListItem(context, i)
+            for (var i = 0; i < countries.length; i++)
+              countryListItem(context, countries[i], onSelect: () {
+                signupViewModel.selectedCountry = countries[i];
+                pop(context);
+              })
           ],
         ),
       ),
@@ -30,15 +41,24 @@ class _CountryListPageState extends State<CountryListPage> {
   }
 }
 
-Widget countryListItem(BuildContext context, int i) {
+Widget countryListItem(BuildContext context, Country country,
+    {VoidCallback onSelect}) {
   return ListTile(
     title: Text(
-      "(+$i) Nigeria",
+      "(+${country?.callingCode ?? ""}) ${country?.name ?? ""})",
       style:
           Theme.of(context).textTheme.bodyText2.copyWith(color: Colors.white),
     ),
+    onTap: onSelect,
     horizontalTitleGap: 4,
-    leading: Image.asset(R.Images.imCheck, height: 24),
+    leading: SvgPicture.network(country?.flag, height: 14,
+        placeholderBuilder: (context) {
+      return ImageIcon(
+        AssetImage(R.Icons.icRefresh),
+        color: Colors.white,
+        size: 14,
+      );
+    }),
   );
 }
 
