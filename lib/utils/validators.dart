@@ -16,50 +16,20 @@ void validateForm(GlobalKey<FormState> formKey, {VoidCallback next}) {
   }
 }
 
-String validateEmail(String email) {
-  if (email == null) return 'Field is required';
-  bool emailValid =
-      RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-              .hasMatch(email) &&
-          email.isNotEmpty;
+String validateEmail(String value) {
+  if (nullify(value) == null) return 'Field is required';
+  bool emailValid = RegExp(
+          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+      .hasMatch(value);
   if (!emailValid) {
     return 'Invalid email address';
   }
   return null;
 }
 
-// String validatePhonenumber(String value) {
-//   if (value == null) return 'Field is required';
-//   if (value.length > 12) {
-//     return 'Invalid phone number, Phone number should\'nt contain whitespaces';
-//   }
-//   bool phoneValid = RegExp(r"^[0-9]+$").hasMatch(value) &&
-//       value.isNotEmpty &&
-//       value.length > 9 &&
-//       value.length < 12;
-//   if (!phoneValid) {
-//     return 'Invalid phone number';
-//   }
-//   return null;
-// }
-
-String validatePin(String value) {
-  if (value == null) return 'Invalid Pin';
-  bool pinValid = value.isNotEmpty &&
-      RegExp(r"^[0-9]+$").hasMatch(value) &&
-      value.length == 6;
-  if (!pinValid) {
-    return 'Invalid pin';
-  }
-  return null;
-}
-
 String validateText(String value) {
-  if (value == null) return 'Field is required';
-  bool textValid = RegExp(r"^[a-zA-Z]+$").hasMatch(value);
-  if (value.isEmpty) {
-    return 'Field is required';
-  }
+  if (nullify(value) == null) return 'Field is required';
+  bool textValid = RegExp(r"^[a-zA-Z0-9]+$").hasMatch(value);
   if (!textValid) {
     return 'Invalid, Please check your input';
   }
@@ -67,11 +37,9 @@ String validateText(String value) {
 }
 
 String validatePassword(String value) {
-  if (nullify(value) == null) return 'Field is required';
-
-  if (value.length < 8) {
+  if (nullify(value) == null)
     return 'Password should be greater than 8 characters';
-  }
+
   if (isPasswordStrong(value) == PASSWORDSTRENGTH.WEAK) {
     return "Weak password, Password should contain atleast a number, and an uppercase character";
   }

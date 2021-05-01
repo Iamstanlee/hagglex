@@ -29,7 +29,7 @@ void main() async {
 /// the user would see when the app loads
 Future<Widget> decideIndexWidget() async {
   await getIt<SharedPrefService>().init();
-  return getIt<SharedPrefService>().token.length == 0
+  return getIt<SharedPrefService>().token.isEmpty
       ? LoginPage()
       : DashboardPage();
 }

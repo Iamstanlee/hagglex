@@ -17,6 +17,7 @@ class BaseTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final bool obscureText;
   final InputMode inputMode;
+  final bool isRequired;
 
   BaseTextField(
       {this.labelText,
@@ -29,7 +30,8 @@ class BaseTextField extends StatelessWidget {
       this.suffixIcon,
       this.keyboardType,
       this.inputMode,
-      this.obscureText = false})
+      this.obscureText = false,
+      this.isRequired = true})
       : super();
 
   @override
@@ -40,7 +42,7 @@ class BaseTextField extends StatelessWidget {
       controller: controller,
       inputFormatters: inputFormatters,
       onSaved: onSaved,
-      validator: validator,
+      validator: isRequired ? validator : null,
       initialValue: initialValue,
       keyboardType: keyboardType,
       obscureText: obscureText,
@@ -72,11 +74,15 @@ class TextInputField extends BaseTextField {
       String hintText,
       Function(String) validator,
       InputMode inputMode,
+      String initialValue,
+      bool isRequired,
       TextInputType keyboardType})
       : super(
             labelText: labelText,
             hintText: hintText,
             onSaved: onSaved,
+            isRequired: isRequired ?? true,
+            initialValue: initialValue,
             validator: validator ?? validateField,
             inputMode: inputMode ?? InputMode.DARK,
             keyboardType: keyboardType ?? TextInputType.text);
