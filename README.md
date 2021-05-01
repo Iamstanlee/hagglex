@@ -7,8 +7,3 @@
 ![test image size]<img src="/screenshots/3.png" width="400" height="790">
 ![test image size]<img src="/screenshots/4.png" width="400" height="790">
 ![test image size]<img src="/screenshots/5.png" width="400" height="790">
-![login](/screenshots/1.png)
-![signup](/screenshots/3.png)
-![welcome](/screenshots/3.png)
-![verify](/screenshots/4.png)
-![country](/screenshots/5.png)
