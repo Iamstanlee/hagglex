@@ -1,6 +1,7 @@
 # Hagglex
 
 - Submission for hagglex onboarding implementation
+- Download the apk [here](https://github.com/Iamstanlee/haggleX/releases/download/v1.0.10/app-armeabi-v7a-release.apk)
 
 ### ScreenShots
 
