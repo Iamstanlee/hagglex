@@ -72,6 +72,7 @@ class SignupViewModel with ChangeNotifier {
     response = Response.loading("Resending code...");
     authService.resendCode(_email ?? email).then((res) {
       if (res) {
+        response = Response.initial();
         Toast.show(context, "Verification code sent!");
       }
     }).catchError((err) {
