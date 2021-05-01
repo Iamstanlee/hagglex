@@ -4,7 +4,7 @@ import 'package:hagglex/services/sharedPreference.dart';
 import 'package:hagglex/utils/constants.dart';
 import 'package:hagglex/utils/helpers.dart';
 
-GraphQLClient clientFor({@required String uri, String token}) {
+GraphQLClient clientFor({@required String uri}) {
   final Link httpLink = HttpLink(uri);
   final AuthLink authLink = AuthLink(
     getToken: () => "Bearer ${getIt<SharedPrefService>().token}",
@@ -17,4 +17,4 @@ GraphQLClient clientFor({@required String uri, String token}) {
   );
 }
 
-final client = clientFor(uri: Constants.GQL_CLIENT);
+final client = clientFor(uri: Constants.API_URL);

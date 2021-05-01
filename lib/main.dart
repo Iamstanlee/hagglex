@@ -12,6 +12,7 @@ import 'package:hagglex/utils/constants.dart';
 import 'package:hagglex/utils/helpers.dart';
 import 'package:provider/provider.dart';
 
+// TODO: write more tests
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 // setup service locators

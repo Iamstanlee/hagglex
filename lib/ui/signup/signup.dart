@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:hagglex/models/country.dart';
 import 'package:hagglex/ui/signup/countryList.dart';
 import 'package:hagglex/ui/signup/signupViewModel.dart';
-import 'package:hagglex/ui/signup/verifyPhone.dart';
 import 'package:hagglex/utils/api.dart';
 import 'package:hagglex/utils/helpers.dart';
 import 'package:hagglex/utils/res.dart';

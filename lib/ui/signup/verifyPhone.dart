@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hagglex/ui/signup/signupViewModel.dart';
-import 'package:hagglex/ui/welcome/welcome.dart';
 import 'package:hagglex/utils/api.dart';
-import 'package:hagglex/utils/helpers.dart';
 import 'package:hagglex/utils/res.dart';
 import 'package:hagglex/utils/spacing.dart';
 import 'package:hagglex/utils/validators.dart';
@@ -14,6 +12,8 @@ import 'package:provider/provider.dart';
 import 'package:hagglex/utils/extensions.dart';
 
 class VerifyPhonePage extends StatefulWidget {
+  // this email passed to the page would be used only
+  // if no email was found in signupViewModel
   final String email;
   VerifyPhonePage({Key key, this.email}) : super(key: key);
   @override

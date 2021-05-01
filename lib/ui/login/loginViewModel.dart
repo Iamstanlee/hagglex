@@ -30,9 +30,8 @@ class LoginViewModel with ChangeNotifier {
       _email = res.user.email;
       getIt<SharedPrefService>().token = res.token;
       if (res.user.emailVerified) {
-        // if login is successful, store the user token
-        // we can do some other stuff here like checking if the user email is verified
-        // or has 2FA enabled
+        // if login is successful and user email is verified, store the user token
+        // we can do some other stuff here like checking if the user email has 2FA enabled
         push(context, route: DashboardPage(), popOFF: true);
       } else {
         resendVerificationCode(context);
