@@ -2,8 +2,13 @@
 
 - Submission for hagglex onboarding implementation
 
-![login](/screenshots/1.png =250x512)
-![signup](/screenshots/3.png =250x512)
-![welcome](/screenshots/3.png =250x512)
-![verify](/screenshots/4.png =250x512)
-![country](/screenshots/5.png =250x512)
+![test image size]<img src="/screenshots/1.png" width="400" height="790">
+![test image size]<img src="/screenshots/2.png" width="400" height="790">
+![test image size]<img src="/screenshots/3.png" width="400" height="790">
+![test image size]<img src="/screenshots/4.png" width="400" height="790">
+![test image size]<img src="/screenshots/5.png" width="400" height="790">
+![login](/screenshots/1.png)
+![signup](/screenshots/3.png)
+![welcome](/screenshots/3.png)
+![verify](/screenshots/4.png)
+![country](/screenshots/5.png)
