@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hagglex/models/country.dart';
-import 'package:hagglex/ui/signup/signupViewModel.dart';
+import 'package:hagglex/ui/signup/signup_viewmodel.dart';
 import 'package:hagglex/utils/api.dart';
 import 'package:hagglex/utils/helpers.dart';
 import 'package:hagglex/utils/res.dart';
 import 'package:hagglex/utils/spacing.dart';
 import 'package:hagglex/widgets/busy.dart';
-import 'package:hagglex/widgets/elevatedButton.dart';
+import 'package:hagglex/widgets/elevated_button.dart';
 import 'package:hagglex/utils/extensions.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +24,7 @@ class _CountryListPageState extends State<CountryListPage> {
     super.initState();
     if (context.read<SignupViewModel>().selectedCountry == null)
       Future.microtask(
-          () => context.read<SignupViewModel>().getActiveCountries(context));
+          () => context.read<SignupViewModel>().getActiveCountries());
   }
 
   @override
@@ -62,7 +62,7 @@ class _CountryListPageState extends State<CountryListPage> {
                 Container(
                     margin: EdgeInsets.only(top: context.getHeight() / 3),
                     child: Elevatedbtn('RETRY', onTap: () {
-                      signupViewModel.getActiveCountries(context);
+                      signupViewModel.getActiveCountries();
                     })),
               if (searchResult.isEmpty) ...[
                 for (var i = 0; i < countries.length; i++)

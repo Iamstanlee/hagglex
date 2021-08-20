@@ -1,6 +1,6 @@
 import 'package:hagglex/models/user.dart';
 import 'package:json_annotation/json_annotation.dart';
-part 'userResp.g.dart';
+part 'user_res.g.dart';
 
 @JsonSerializable()
 class UserResp {

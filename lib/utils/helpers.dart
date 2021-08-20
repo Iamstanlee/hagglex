@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
-
 import 'package:get_it/get_it.dart';
 import 'package:hagglex/services/authentication.dart';
-import 'package:hagglex/services/sharedPreference.dart';
+import 'package:hagglex/services/preference.dart';
+
+final navigator = getIt<GlobalKey<NavigatorState>>();
+final ctx = navigator.currentContext;
 
 final getIt = GetIt.instance;
 void setupLocator() {
-  getIt.registerLazySingleton<SharedPrefService>(() => SharedPrefService());
-  getIt.registerLazySingleton<AuthServiceImpl>(() => AuthServiceImpl());
+  getIt.registerLazySingleton<PrefsService>(() => SharedPrefs());
+  getIt.registerLazySingleton<AuthService>(() => GraphQlAuth());
+  getIt.registerSingleton<GlobalKey<NavigatorState>>(
+      GlobalKey<NavigatorState>());
 }
 
 ///
 /// push a new route by passing a route widget
+///
 /// if `popPrev` is `true`, it would pop off the previous routes off the stack
 /// and set the first route to the current
+///
 /// `popOFF` is `true`, it clears the route stack and exit the app if
 /// the back button is pressed
 ///

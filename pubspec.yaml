@@ -1,6 +1,6 @@
 name: hagglex
 description: Interview assessment App
-version: 1.0.0+10
+version: 1.1.0+11
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -21,7 +21,7 @@ dev_dependencies:
     sdk: flutter
   build_runner: ^1.8.1
   json_serializable: ^3.3.0
-  test:
+  test: ^1.16.5
 
 flutter:
   uses-material-design: true

@@ -4,7 +4,7 @@ import 'package:hagglex/utils/helpers.dart';
 import 'package:hagglex/utils/res.dart';
 import 'package:hagglex/utils/extensions.dart';
 import 'package:hagglex/utils/spacing.dart';
-import 'package:hagglex/widgets/elevatedButton.dart';
+import 'package:hagglex/widgets/elevated_button.dart';
 
 class WelcomePage extends StatelessWidget {
   @override
@@ -28,24 +28,36 @@ class WelcomePage extends StatelessWidget {
               children: [
                 Image.asset(R.Images.imCheck, height: 64),
                 Padding(
-                    padding: EdgeInsets.only(top: VSpacing.md.height),
-                    child: Text('Setup Complete',
-                        style: t.textTheme.bodyText1
-                            .copyWith(color: Colors.white))),
+                  padding: EdgeInsets.only(top: VSpacing.md.height),
+                  child: Text(
+                    'Setup Complete',
+                    style: t.textTheme.bodyText1.copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
                 Padding(
-                    padding: EdgeInsets.only(top: VSpacing.sm.height),
-                    child: Text('Thank you for setting up your HaggleX account',
-                        style:
-                            t.textTheme.caption.copyWith(color: Colors.white))),
+                  padding: EdgeInsets.only(top: VSpacing.sm.height),
+                  child: Text(
+                    'Thank you for setting up your HaggleX account',
+                    style: t.textTheme.caption.copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
               ],
             ),
             PositionedDirectional(
-                bottom: VSpacing.xxl.height + 8,
-                start: 0,
-                end: 0,
-                child: Elevatedbtn('START EXPLORING', onTap: () {
+              bottom: VSpacing.xxl.height + 8,
+              start: 0,
+              end: 0,
+              child: Elevatedbtn(
+                'START EXPLORING',
+                onTap: () {
                   push(context, route: DashboardPage(), popOFF: true);
-                }))
+                },
+              ),
+            )
           ],
         ),
       ),

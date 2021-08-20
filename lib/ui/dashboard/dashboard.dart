@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hagglex/ui/login/loginViewModel.dart';
+import 'package:hagglex/ui/login/login_viewmodel.dart';
 import 'package:hagglex/utils/api.dart';
 import 'package:hagglex/utils/spacing.dart';
 import 'package:hagglex/widgets/busy.dart';
-import 'package:hagglex/widgets/elevatedButton.dart';
+import 'package:hagglex/widgets/elevated_button.dart';
 import 'package:provider/provider.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -30,7 +30,7 @@ class _DashboardPageState extends State<DashboardPage> {
             Padding(
                 padding: EdgeInsets.all(kHorizontalPadding),
                 child: Elevatedbtn('LOG OUT', onTap: () {
-                  loginViewModel.logoutUser(context);
+                  loginViewModel.logoutUser();
                 }))
           ],
         ),

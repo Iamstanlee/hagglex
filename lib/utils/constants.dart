@@ -1,5 +1,5 @@
 ///
-/// App wide constant variables
+/// app wide constants
 ///
 class Constants {
   static const String APP_NAME = "HaggleX";

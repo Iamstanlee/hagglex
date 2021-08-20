@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hagglex/models/country.dart';
-import 'package:hagglex/ui/signup/countryList.dart';
-import 'package:hagglex/ui/signup/signupViewModel.dart';
+import 'package:hagglex/ui/signup/country_list.dart';
+import 'package:hagglex/ui/signup/signup_viewmodel.dart';
 import 'package:hagglex/utils/api.dart';
 import 'package:hagglex/utils/helpers.dart';
 import 'package:hagglex/utils/res.dart';
 import 'package:hagglex/utils/spacing.dart';
 import 'package:hagglex/utils/validators.dart';
-import 'package:hagglex/widgets/backButton.dart';
+import 'package:hagglex/widgets/back_button.dart';
 import 'package:hagglex/widgets/busy.dart';
-import 'package:hagglex/widgets/gradientBtn.dart';
-import 'package:hagglex/widgets/textField.dart';
+import 'package:hagglex/widgets/gradient_button.dart';
+import 'package:hagglex/widgets/text_field.dart';
 import 'package:provider/provider.dart';
 
 class SignupPage extends StatefulWidget {
@@ -28,7 +28,7 @@ class _SignupPageState extends State<SignupPage> {
     super.initState();
     if (context.read<SignupViewModel>().selectedCountry == null)
       Future.microtask(
-          () => context.read<SignupViewModel>().getActiveCountries(context));
+          () => context.read<SignupViewModel>().getActiveCountries());
   }
 
   @override
@@ -153,7 +153,7 @@ class _SignupPageState extends State<SignupPage> {
                             VSpacing.md,
                             GradientBtn("SIGN UP", onTap: () {
                               validateForm(formKey, next: () {
-                                signupViewModel.signupUser(context);
+                                signupViewModel.signupUser();
                               });
                             }),
                             VSpacing.xxl

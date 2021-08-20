@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hagglex/ui/login/loginViewModel.dart';
+import 'package:hagglex/ui/login/login_viewmodel.dart';
 import 'package:hagglex/ui/signup/signup.dart';
 import 'package:hagglex/utils/api.dart';
 import 'package:hagglex/utils/extensions.dart';
@@ -8,8 +8,8 @@ import 'package:hagglex/utils/res.dart';
 import 'package:hagglex/utils/spacing.dart';
 import 'package:hagglex/utils/validators.dart';
 import 'package:hagglex/widgets/busy.dart';
-import 'package:hagglex/widgets/elevatedButton.dart';
-import 'package:hagglex/widgets/textField.dart';
+import 'package:hagglex/widgets/elevated_button.dart';
+import 'package:hagglex/widgets/text_field.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -95,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                             VSpacing.xl,
                             Elevatedbtn("LOG IN", onTap: () {
                               validateForm(formKey, next: () {
-                                loginViewModel.loginUser(context);
+                                loginViewModel.loginUser();
                               });
                             }),
                             VSpacing.xl,

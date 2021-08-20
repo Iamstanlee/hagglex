@@ -21,7 +21,7 @@ TextTheme _textTheme = TextTheme(
   button: TextStyle(fontWeight: _bold, fontSize: 12.0),
 );
 
-ThemeData baseTheme(BuildContext context) => ThemeData(
+ThemeData baseTheme() => ThemeData(
     primaryColor: R.Colors.primaryColor,
     scaffoldBackgroundColor: R.Colors.scaffoldColor,
     fontFamily: R.Strings.primaryFont,
@@ -36,7 +36,5 @@ ThemeData baseTheme(BuildContext context) => ThemeData(
             onPrimary: R.Colors.elevatedBtnTextColor)),
     inputDecorationTheme: InputDecorationTheme());
 
-ThemeData theme(BuildContext context) =>
-    baseTheme(context).copyWith(brightness: Brightness.light);
-
-ThemeData darkTheme(BuildContext context) => baseTheme(context).copyWith();
+ThemeData get theme => baseTheme().copyWith(brightness: Brightness.light);
+ThemeData get darkTheme => baseTheme().copyWith();

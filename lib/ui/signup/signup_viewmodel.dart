@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:hagglex/models/country.dart';
-import 'package:hagglex/models/request/signupReq.dart';
+import 'package:hagglex/models/request/signup_req.dart';
 import 'package:hagglex/models/user.dart';
 import 'package:hagglex/services/authentication.dart';
-import 'package:hagglex/services/sharedPreference.dart';
-import 'package:hagglex/ui/signup/verifyPhone.dart';
+import 'package:hagglex/services/preference.dart';
+import 'package:hagglex/ui/signup/verify_phone.dart';
 import 'package:hagglex/ui/welcome/welcome.dart';
 import 'package:hagglex/utils/api.dart';
 import 'package:hagglex/utils/helpers.dart';
-import 'package:hagglex/widgets/toast.dart';
 
 class SignupViewModel with ChangeNotifier {
-  final AuthServiceImpl authService;
-  SignupViewModel(this.authService);
+  final AuthService _auth;
+  final PrefsService _prefs;
+  SignupViewModel({AuthService auth, PrefsService prefs})
+      : _auth = auth ?? getIt<AuthService>(),
+        _prefs = prefs ?? getIt<PrefsService>();
+
   SignupRequest signupRequest = SignupRequest();
+
   int code;
   String _email;
   Response<User> _response = Response.initial();
@@ -37,59 +41,59 @@ class SignupViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void signupUser(BuildContext context) async {
+  void signupUser() async {
     signupRequest.country = selectedCountry.name;
     signupRequest.currency = selectedCountry.currencyCode;
     response = Response.loading("Signing you up...");
-    authService.signup(signupRequest).then((res) {
+    _auth.signup(signupRequest).then((res) {
       response = Response.completed(res.user);
       _email = res.user.email;
-      getIt<SharedPrefService>().token = res.token;
+      _prefs.token = res.token;
       // verify the user email/phone
-      push(context, route: VerifyPhonePage());
+      push(ctx, route: VerifyPhonePage());
     }).catchError((err) {
       response = Response.error(err.toString());
-      errorToast(context, err.toString());
+      print(err.toString());
     });
   }
 
-  void verifyUser(BuildContext context) async {
+  void verifyUser() async {
     response = Response.loading("Please wait...");
-    authService.verify(code).then((res) {
+    _auth.verify(code).then((res) {
       response = Response.completed(res.user);
       if (res.user.emailVerified) {
         // if signup is successful, store the user token
-        getIt<SharedPrefService>().token = res.token;
-        push(context, route: WelcomePage(), popOFF: true);
+        _prefs.token = res.token;
+        push(ctx, route: WelcomePage(), popOFF: true);
       }
     }).catchError((err) {
       response = Response.error(err.toString());
-      errorToast(context, err.toString());
+      print(err.toString());
     });
   }
 
-  void resendVerificationCode(BuildContext context, [String email]) async {
+  void resendVerificationCode([String email]) async {
     response = Response.loading("Resending code...");
-    authService.resendCode(_email ?? email).then((res) {
+    _auth.resendCode(_email ?? email).then((res) {
       if (res) {
         response = Response.initial();
-        Toast.show(context, "Verification code sent!");
+        print("verification code sent!");
       }
     }).catchError((err) {
       response = Response.error(err.toString());
-      errorToast(context, err.toString());
+      print(err.toString());
     });
   }
 
-  void getActiveCountries(BuildContext context) {
+  void getActiveCountries() {
     countriesResponse = Response.loading("Please wait...");
-    authService.fetchActiveCountries().then((countries) {
+    _auth.fetchActiveCountries().then((countries) {
       selectedCountry =
           countries.firstWhere((country) => country.name == "Nigeria");
       countriesResponse = Response.completed(countries);
     }).catchError((err) {
       countriesResponse = Response.error(err.toString());
-      errorToast(context, err.toString());
+      print(err.toString());
     });
   }
 }

@@ -1,14 +1,14 @@
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:hagglex/models/country.dart';
-import 'package:hagglex/models/request/loginReq.dart';
-import 'package:hagglex/models/request/signupReq.dart';
-import 'package:hagglex/models/response/userResp.dart';
-import 'package:hagglex/services/sharedPreference.dart';
+import 'package:hagglex/models/request/login_req.dart';
+import 'package:hagglex/models/request/signup_req.dart';
+import 'package:hagglex/models/response/user_res.dart';
+import 'package:hagglex/services/preference.dart';
 import 'package:hagglex/utils/api.dart';
 import 'package:hagglex/utils/graphql.dart';
 import 'package:hagglex/utils/helpers.dart';
 
-class AuthServiceImpl implements AuthService {
+class GraphQlAuth implements AuthService {
   @override
   Future<UserResp> login(LoginRequest loginRequest) async {
     final String documentNode = """
@@ -128,8 +128,8 @@ class AuthServiceImpl implements AuthService {
     return countries.map((country) => Country.fromJson(country)).toList();
   }
 
-  Future<Null> logout() async {
-    await getIt<SharedPrefService>().flush();
+  Future<void> logout() async {
+    await getIt<PrefsService>().flush();
   }
 }
 
@@ -139,4 +139,5 @@ abstract class AuthService {
   Future<UserResp> verify(int code);
   Future<bool> resendCode(String email);
   Future<List<Country>> fetchActiveCountries();
+  Future<void> logout();
 }
